@@ -18,26 +18,26 @@ export function PlaybackMap({ pings, stops }: Props) {
     if (!map) return
 
     map.on('load', () => {
-      // Draw actual path taken
-      if (pings.length > 1) {
-        const coords = pings.map(p => [p.lng, p.lat])
-        map.addSource('history-path', {
-          type: 'geojson',
-          data: { type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: coords } }
-        })
-        map.addLayer({
-          id: 'history-path-layer', type: 'line', source: 'history-path',
-          layout: { 'line-join': 'round', 'line-cap': 'round' },
-          paint: { 'line-color': '#3b82f6', 'line-width': 4, 'line-opacity': 0.7 }
-        })
-        // Fit bounds
-        const bounds = new maplibregl.LngLatBounds(coords[0] as [number,number], coords[0] as [number,number])
-        coords.forEach(c => bounds.extend(c as [number,number]))
-        map.fitBounds(bounds, { padding: 50 })
-      }
+      import('maplibre-gl').then(({ Marker, Popup, LngLatBounds }) => {
+        // Draw actual path taken
+        if (pings.length > 1) {
+          const coords = pings.map(p => [p.lng, p.lat])
+          map.addSource('history-path', {
+            type: 'geojson',
+            data: { type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: coords } }
+          })
+          map.addLayer({
+            id: 'history-path-layer', type: 'line', source: 'history-path',
+            layout: { 'line-join': 'round', 'line-cap': 'round' },
+            paint: { 'line-color': '#3b82f6', 'line-width': 4, 'line-opacity': 0.7 }
+          })
+          // Fit bounds
+          const bounds = new LngLatBounds(coords[0] as [number,number], coords[0] as [number,number])
+          coords.forEach(c => bounds.extend(c as [number,number]))
+          map.fitBounds(bounds, { padding: 50 })
+        }
 
-      // Add stops
-      import('maplibre-gl').then(({ Marker, Popup }) => {
+        // Add stops
         stops.forEach(s => {
           const el = document.createElement('div')
           el.className = 'w-4 h-4 bg-green-500 rounded-full border-2 border-white shadow-md'
