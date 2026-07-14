@@ -51,5 +51,9 @@ export function PlaybackMap({ pings, stops }: Props) {
     })
   }, [pings, stops])
 
-  return <MapLibreMap ref={mapRef} zoom={12} className="w-full h-full" />
+  return (
+    <div className="absolute inset-0">
+      <MapLibreMap ref={mapRef} zoom={12} />
+    </div>
+  )
 }

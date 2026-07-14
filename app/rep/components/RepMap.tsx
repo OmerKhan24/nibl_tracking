@@ -62,5 +62,9 @@ export function RepMap({ center, waypoints, stops, routeGeom, currentPos }: RepM
     })
   }, [waypoints, stops, routeGeom, currentPos])
 
-  return <MapLibreMap ref={mapRef} center={center} zoom={13} className="w-full h-full" />
+  return (
+    <div className="absolute inset-0">
+      <MapLibreMap ref={mapRef} center={center} zoom={13} />
+    </div>
+  )
 }
