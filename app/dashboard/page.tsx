@@ -1,12 +1,11 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { useRealtimePings } from '@/hooks/useRealtimePings'
+import { useRealtimePings, type LivePing } from '@/hooks/useRealtimePings'
 import { LiveMap } from './components/LiveMap'
 import { RepSidebar } from './components/RepSidebar'
 
 interface Rep { id: string; full_name: string; is_active: boolean }
-interface LivePing { rep_id: string; lat: number; lng: number; recorded_at: string }
 
 export default function DashboardPage() {
   const [reps, setReps] = useState<Rep[]>([])
@@ -31,7 +30,7 @@ export default function DashboardPage() {
       // Fetch latest ping per active rep to bootstrap map before realtime kicks in
       const { data: pingsData } = await supabase
         .from('gps_pings')
-        .select('rep_id, lat, lng, recorded_at')
+        .select('rep_id, lat, lng, accuracy_m, recorded_at')
         .order('recorded_at', { ascending: false })
         .limit(100)
 

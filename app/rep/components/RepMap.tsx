@@ -23,7 +23,7 @@ export function RepMap({ center, waypoints, stops, routeGeom, currentPos }: RepM
     map.on('load', () => {
       // Route line
       if (routeGeom) {
-        const src = map.getSource('route') as maplibregl.GeoJSONSource | undefined
+        const src = map.getSource('route') as import('maplibre-gl').GeoJSONSource | undefined
         const geojson: GeoJSON.Feature = {
           type: 'Feature', geometry: { type: 'LineString', coordinates: routeGeom }, properties: {},
         }
