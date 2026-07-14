@@ -29,7 +29,7 @@ const MapLibreMap = forwardRef<MapHandle, MapLibreMapProps>(
       import('maplibre-gl').then(({ Map, NavigationControl }) => {
         map = new Map({
           container: containerRef.current!,
-          style:     'https://tiles.openfreemap.org/styles/positron',
+          style:     'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
           center:    center as LngLatLike,
           zoom,
         })
