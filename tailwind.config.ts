@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+// Cache buster for Vercel: 1
 
 const config: Config = {
   content: [
